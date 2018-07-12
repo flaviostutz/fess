@@ -8,13 +8,8 @@ services:
       - ES_HTTP_URL=http://elasticsearch:9200
       - ES_TRANSPORT_URL=elasticsearch:9300
       - FESS_DICTIONARY_PATH=/var/lib/elasticsearch/config/
-
-  elasticsearch:
-    image: elasticsearch:5.6
-    ports:
-      - "9200:9200"
     volumes:
-      - elasticsearch:/usr/share/elasticsearch/data
+      - elasticsearch:/var/lib/elasticsearch
 
 volumes:
   elasticsearch:
