@@ -4,10 +4,6 @@ services:
     image: codelibs/fess:12.1
     ports:
       - "8080:8080"
-    environment:
-      - ES_HTTP_URL=http://elasticsearch:9200
-      - ES_TRANSPORT_URL=elasticsearch:9300
-      - FESS_DICTIONARY_PATH=/var/lib/elasticsearch/config/
     volumes:
       - elasticsearch:/var/lib/elasticsearch
 
