@@ -2,6 +2,12 @@
 FESS Docker Container. See more at https://github.com/codelibs/fess
 Demo at https://search.n2sm.co.jp
 
+# Before bringing the Container up
+
+On Ubuntu we had to set the `vm.max_map_count` setting to 262144. Run `sysctl -w vm.max_map_count=262144`.
+
+For more information, refer to https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
+
 # Usage
 docker-compose.yml
 
