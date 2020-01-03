@@ -1,7 +1,7 @@
 version: '3'
 services:
   fess:
-    image: codelibs/fess:12.1
+    image: codelibs/fess:13.5
     ports:
       - "8080:8080"
     volumes:
