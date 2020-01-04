@@ -35,8 +35,15 @@ Password: admin
 
 ### Configure a Web Crawler
 The crawler configuration needs a Regex for matching URLs. Special attention to the fact that the match must be a full match, so any chars before or after the part you want to match must be included in the match.
-Example: 
+
+Example 1: 
+  * This will navigate and index all pages inside www.stf.jus.br/portal/jurisprudencia/
   * URLs: http://www.stf.jus.br/portal/jurisprudencia/listarResultadoPesquisaJurisprudenciaFavoritaRamos.asp
   * Included URLs For Crawling: .\*www.stf.jus.br/portal/jurisprudencia/.*
   * Included URLs For Indexing: .\*www.stf.jus.br/portal/jurisprudencia/.*
-  * This will navigate and index all pages inside www.stf.jus.br/portal/jurisprudencia/
+
+Example 2: 
+  * This will start indexing all web pages (from any sites) found starting from http://br.yahoo.com
+  * URLs: http://br.yahoo.com
+  * Included URLs For Crawling: .\*
+  * Included URLs For Indexing: .\*
