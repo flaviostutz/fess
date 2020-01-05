@@ -1,11 +1,82 @@
-version: '3'
+version: "3"
 services:
-  fess:
-    image: codelibs/fess:13.5
+  fess01:
+    image: codelibs/fess:13.5.0
+    container_name: fess01
     ports:
       - "8080:8080"
+    depends_on:
+      - es01
+      - es02
+    environment:
+      - RUN_ELASTICSEARCH=false
+      - "ES_HTTP_URL=http://es01:9200"
+      - "FESS_DICTIONARY_PATH=/usr/share/elasticsearch/config/dictionary/"
+
+  es01:
+    image: codelibs/fess-elasticsearch:7.5.1
+    container_name: es01
+    environment:
+      - node.name=es01
+      - discovery.seed_hosts=es02
+      - cluster.initial_master_nodes=es01,es02
+      - cluster.name=fess-es
+      - bootstrap.memory_lock=false
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "FESS_DICTIONARY_PATH=/usr/share/elasticsearch/config/dictionary"
+    # ulimits: #not supported by Swarm
+    #   memlock:
+    #     soft: -1
+    #     hard: -1
+    # sysctls: #not supported because this setting cannot be private
+    #   vm.max_map_count: '262144'
     volumes:
-      - elasticsearch:/var/lib/elasticsearch
+      - esdata01:/usr/share/elasticsearch/data
+      - esdictionary01:/usr/share/elasticsearch/config/dictionary
+    ports:
+      - 9200:9200
+
+  es02:
+    image: codelibs/fess-elasticsearch:7.5.1
+    container_name: es02
+    environment:
+      - node.name=es02
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01,es02
+      - cluster.name=fess-es
+      - bootstrap.memory_lock=false
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - "FESS_DICTIONARY_PATH=/usr/share/elasticsearch/config/dictionary"
+    # ulimits: #not supported by Swarm
+    #   memlock:
+    #     soft: -1
+    #     hard: -1
+    # sysctls:
+    #   vm.max_map_count: '262144'
+    volumes:
+      - esdata02:/usr/share/elasticsearch/data
+      - esdictionary02:/usr/share/elasticsearch/config/dictionary
+    ports:
+      - 9201:9200
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.5.1
+    container_name: kibana
+    depends_on:
+      - es01
+      - es02
+    environment:
+      - "ELASTICSEARCH_HOSTS=http://es01:9200"
+    ports:
+      - 5601:5601
 
 volumes:
-  elasticsearch:
+  esdata01:
+    driver: local
+  esdictionary01:
+    driver: local
+  esdata02:
+    driver: local
+  esdictionary02:
+    driver: local
+
