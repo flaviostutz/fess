@@ -10,7 +10,7 @@ For more advanced FESS usage (Elasticsearch clustering etc), visit https://githu
 * On Ubuntu run `sysctl -w vm.max_map_count=262144`. This is required by Elasticsearch.
   * For more information, refer to https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
 
-* For Elasticsearch containers, it's optimal to use ENVIRONMENT `bootstrap.memory_lock=true` for better ram usage, but this requires the operating system to change /etc/security/limits.conf. See https://stackoverflow.com/questions/45008355/elasticsearch-process-memory-locking-failed
+* For Elasticsearch containers, it's optimal to use ENVIRONMENT `bootstrap.memory_lock=true` for better ram usage, but this requires a change to /etc/security/limits.conf. See https://stackoverflow.com/questions/45008355/elasticsearch-process-memory-locking-failed
 
 # Usage
 
