@@ -5,11 +5,10 @@ services:
   fess01:
     image: codelibs/fess:13.5.0
     ports:
-      - "8080:8080"
+      - 8080:8080
     environment:
       - RUN_ELASTICSEARCH=false
       - "ES_HTTP_URL=http://es01:9200"
-      - "FESS_DICTIONARY_PATH=/usr/share/elasticsearch/config/dictionary/"
 
   es01:
     image: codelibs/fess-elasticsearch:7.5.1
