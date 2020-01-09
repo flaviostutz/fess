@@ -21,14 +21,14 @@ docker-compose.yml
 version: "3"
 services:
   fess01:
-    image: flaviostutz/fess:13.5.1.1
+    image: flaviostutz/fess
     ports:
       - 8080:8080
     environment:
       - "ES_HTTP_URL=http://es01:9200"
 
   es01:
-    image: flaviostutz/fess-elasticsearch:7.5.1.1
+    image: flaviostutz/fess-elasticsearch
     environment:
       - node.name=es01
       - cluster.initial_master_nodes=es01

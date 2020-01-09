@@ -11,7 +11,7 @@ services:
       - "ES_HTTP_URL=http://es01:9200"
 
   es01:
-    image: flaviostutz/fess-elasticsearch:7.5.1.1
+    image: flaviostutz/fess-elasticsearch:7.5.1.2
     environment:
       - node.name=es01
       # - discovery.seed_hosts=es02
