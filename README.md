@@ -18,17 +18,31 @@ For more advanced FESS usage (Elasticsearch clustering etc), visit https://githu
 docker-compose.yml
 
 ```
-version: '3'
+version: "3"
 services:
-  fess:
-    image: codelibs/fess:12.1
+  fess01:
+    image: flaviostutz/fess:13.5.1.1
     ports:
-      - "8080:8080"
-    volumes:
-      - elasticsearch:/var/lib/elasticsearch
+      - 8080:8080
+    environment:
+      - "ES_HTTP_URL=http://es01:9200"
 
-volumes:
-  elasticsearch:
+  es01:
+    image: flaviostutz/fess-elasticsearch:7.5.1.1
+    environment:
+      - node.name=es01
+      - cluster.initial_master_nodes=es01
+      - cluster.name=fess-es
+      - bootstrap.memory_lock=false
+    ports:
+      - 9200:9200
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.5.1
+    environment:
+      - "ELASTICSEARCH_HOSTS=http://es01:9200"
+    ports:
+      - 5601:5601
 ```
 
 ### Login to admin panel
