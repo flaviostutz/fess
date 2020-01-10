@@ -58,9 +58,14 @@ Example 1:
   * URLs: http://www.stf.jus.br/portal/jurisprudencia/listarResultadoPesquisaJurisprudenciaFavoritaRamos.asp
   * Included URLs For Crawling: .\*www.stf.jus.br/portal/jurisprudencia/.*
   * Included URLs For Indexing: .\*www.stf.jus.br/portal/jurisprudencia/.*
-
+  * Excluded URLs For Crawling: (?i).*\.(css|js|jpeg|jpg|gif|png|bmp|wmv|exe|mp4|json)
+  * Excluded URLs For Indexing: (?i).*\.(css|js|jpeg|jpg|gif|png|bmp|wmv|exe|mp4|json)
+  
 Example 2: 
   * This will start indexing all web pages (from any sites) found starting from http://br.yahoo.com
   * URLs: http://br.yahoo.com
   * Included URLs For Crawling: .\*
   * Included URLs For Indexing: .\*
+  * Excluded URLs For Crawling: (?i).*\.(css|js|jpeg|jpg|gif|png|bmp|wmv|exe|mp4|json)
+  * Excluded URLs For Indexing: (?i).*\.(css|js|jpeg|jpg|gif|png|bmp|wmv|exe|mp4|json)
+
