@@ -1,0 +1,84 @@
+version: "3"
+
+services:
+
+  fess-api:
+    build: .
+    image: flaviostutz/fess:13.5.1.2
+    ports:
+      - 8080
+    environment:
+      - "ES_HTTP_URL=http://es01:9200"
+      - NODE_NAME=fess-api
+
+  fess-worker1:
+    build: .
+    image: flaviostutz/fess:13.5.1.2
+    ports:
+      - 8081:8080
+    environment:
+      - "ES_HTTP_URL=http://es01:9200"
+      - NODE_NAME=fess-worker1
+
+  fess-worker2:
+    build: .
+    image: flaviostutz/fess:13.5.1.2
+    ports:
+      - 8082:8080
+    environment:
+      - "ES_HTTP_URL=http://es01:9200"
+      - NODE_NAME=fess-worker2
+
+  es01:
+    image: flaviostutz/fess-elasticsearch:7.5.1.4
+    environment:
+      - node.name=es01
+      - discovery.seed_hosts=es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      - cluster.name=fess-es
+      - bootstrap.memory_lock=false
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+    ports:
+      - 9201:9200
+
+  es02:
+    image: flaviostutz/fess-elasticsearch:7.5.1.4
+    environment:
+      - node.name=es02
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01,es02,es03
+      - cluster.name=fess-es
+      - bootstrap.memory_lock=false
+    volumes:
+      - esdata02:/usr/share/elasticsearch/data
+    ports:
+      - 9202:9200
+
+  es03:
+    image: flaviostutz/fess-elasticsearch:7.5.1.4
+    environment:
+      - node.name=es03
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01,es02,es03
+      - cluster.name=fess-es
+      - bootstrap.memory_lock=false
+    volumes:
+      - esdata03:/usr/share/elasticsearch/data
+    ports:
+      - 9203:9200
+        
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.5.1
+    environment:
+      - "ELASTICSEARCH_HOSTS=http://es01:9200"
+    ports:
+      - 5601:5601
+
+volumes:
+  esdata01:
+    driver: local
+  esdata02:
+    driver: local
+  esdata03:
+    driver: local

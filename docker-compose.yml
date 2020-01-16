@@ -9,15 +9,6 @@ services:
       - 8080:8080
     environment:
       - "ES_HTTP_URL=http://es01:9200"
-      - NODE_NAME=fess01
-
-  fess02:
-    build: .
-    image: flaviostutz/fess:13.5.1.2
-    ports:
-      - 8081:8080
-    environment:
-      - "ES_HTTP_URL=http://es01:9200"
 
   es01:
     image: flaviostutz/fess-elasticsearch:7.5.1.4
@@ -27,21 +18,8 @@ services:
       - cluster.initial_master_nodes=es01
       - cluster.name=fess-es
       - bootstrap.memory_lock=false
-    volumes:
-      - esdata01:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-
-  es02:
-    image: flaviostutz/fess-elasticsearch:7.5.1.4
-    environment:
-      - node.name=es02
-      - discovery.seed_hosts=es01
-      - cluster.initial_master_nodes=es01,es02
-      - cluster.name=fess-es
-      - bootstrap.memory_lock=false
-    volumes:
-      - esdata02:/usr/share/elasticsearch/data
+    # volumes:
+    #   - esdata01:/usr/share/elasticsearch/data
     ports:
       - 9201:9200
 
@@ -55,6 +33,3 @@ services:
 volumes:
   esdata01:
     driver: local
-  esdata02:
-    driver: local
-

@@ -18,4 +18,6 @@ if ! [ -f "$INIT_FILE" ]; then
 
 fi
 
+curl --retry 999 --retry-delay 3 --retry-connrefused -XGET "$ES_HTTP_URL/_cluster/health?wait_for_status=yellow&timeout=3m"
+
 /usr/share/fess/run.sh

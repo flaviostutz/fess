@@ -1,14 +1,6 @@
 # FESS docker-compose
 FESS Docker Container with advanced clustering configurations.
-
-Demo at https://search.n2sm.co.jp
-
-See more at:
-
-* FESS usage (Elasticsearch clustering etc): https://github.com/codelibs/docker-fess/blob/master/compose/docker-compose.yml
-
-* Source code: https://github.com/codelibs/fess
-
+FESS Demo at https://search.n2sm.co.jp
 
 # Requirements
 
@@ -80,3 +72,42 @@ Example 2:
 * ES_HTTP_URL - Full URL for Elasticsearch http API. ex.: http://es01:9200
 * NODE_NAME - FESS 'scheduler.target.name' configuration. Can be used as 'target name' in schedulers so that only a specific node in a FESS cluster will run a job. See https://fess.codelibs.org/11.0/admin/scheduler-guide.html#target and https://github.com/codelibs/fess/issues/553 for more info.
 
+# More advanced cluster example
+
+In this example, we will have:
+
+* a three-nodes Elasticsearch cluster 
+* 4 instances of FESS dedicated to handle user searches
+* 2 worker nodes that will handle scheduled jobs (indexing, crawling etc).
+  * fess-worker1 has NODE_NAME=fess-worker1
+  * fess-worker2 has NODE_NAME=fess-worker2
+  * Change the "Target" of the jobs in FESS admin to "fess-worker1" or "fess-worker2" to distribute workload among instances
+  * Don't let any job running on "all" targets to avoid using unecessary resources in fess-api nodes (the nodes that will handle user queries)
+* As FESS doesn't not perform a cluster coordination, the initial instantiation must be standalone to avoid concurrence in initial indexes creation
+
+* Get docker-compose file at http://github.com/flaviostutz/fess/docker-compose-cluster.yml
+
+* Run 
+```
+#Warm up Elasticsearch cluster first (starting all at the same time throws errors - investigate later)
+docker-compose -f docker-compose-cluster.yml up es01 es02 es03
+
+#Start FESS (will create initial indexes)
+docker-compose -f docker-compose-cluster.yml up fess-api
+
+#Scale FESS api containers to handle more users
+docker-compose -f docker-compose-cluster.yml up --scale fess-api=4 fess-api fess-worker1 fess-worker2
+```
+
+After configuring Crawler and assigning it to a scheduler that runs on worker2, something like this will show up:
+
+![docker stats](/screen1.png?raw=true "docker stats")
+
+Observe that only worker2 and Elasticsearch instance are using more CPU. All other FESS instances are free to handle user queries.
+
+# More information
+
+
+* Oficial FESS usage (Elasticsearch clustering etc): https://github.com/codelibs/docker-fess/blob/master/compose/docker-compose.yml
+
+* Source code: https://github.com/codelibs/fess
