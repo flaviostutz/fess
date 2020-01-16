@@ -104,7 +104,7 @@ After configuring Crawler and assigning it to a scheduler that runs on worker2, 
 
 ![docker stats](/screen1.png?raw=true "docker stats")
 
-Observe that only worker2 and Elasticsearch instance are using more CPU. All other FESS instances are free to handle user queries.
+Observe that only worker2 and Elasticsearch instances are using considerable CPU. All other FESS instances are free to handle user queries.
 
 # More information
 
