@@ -4,9 +4,18 @@ services:
 
   fess01:
     build: .
-    image: flaviostutz/fess:13.5.1.1
+    image: flaviostutz/fess:13.5.1.2
     ports:
       - 8080:8080
+    environment:
+      - "ES_HTTP_URL=http://es01:9200"
+      - NODE_NAME=fess01
+
+  fess02:
+    build: .
+    image: flaviostutz/fess:13.5.1.2
+    ports:
+      - 8081:8080
     environment:
       - "ES_HTTP_URL=http://es01:9200"
 

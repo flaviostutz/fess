@@ -75,3 +75,8 @@ Example 2:
   * Excluded URLs For Crawling: (?i).*\.(css|js|jpeg|jpg|gif|png|bmp|wmv|exe|mp4|json)
   * Excluded URLs For Indexing: (?i).*\.(css|js|jpeg|jpg|gif|png|bmp|wmv|exe|mp4|json)
 
+# ENVs configurations
+
+* ES_HTTP_URL - Full URL for Elasticsearch http API. ex.: http://es01:9200
+* NODE_NAME - FESS 'scheduler.target.name' configuration. Can be used as 'target name' in schedulers so that only a specific node in a FESS cluster will run a job. See https://fess.codelibs.org/11.0/admin/scheduler-guide.html#target and https://github.com/codelibs/fess/issues/553 for more info.
+
