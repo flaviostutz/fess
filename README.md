@@ -1,6 +1,7 @@
 # FESS docker-compose
 FESS Docker Container with advanced clustering configurations.
-FESS Demo at https://search.n2sm.co.jp
+
+FESS is an advanced search engine. Demo at https://search.n2sm.co.jp
 
 # Requirements
 
