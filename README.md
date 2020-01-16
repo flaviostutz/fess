@@ -1,9 +1,14 @@
 # FESS docker-compose
-FESS Docker Container. See more at https://github.com/codelibs/fess
+FESS Docker Container with advanced clustering configurations.
 
 Demo at https://search.n2sm.co.jp
 
-For more advanced FESS usage (Elasticsearch clustering etc), visit https://github.com/codelibs/docker-fess/blob/master/compose/docker-compose.yml
+See more at:
+
+* FESS usage (Elasticsearch clustering etc): https://github.com/codelibs/docker-fess/blob/master/compose/docker-compose.yml
+
+* Source code: https://github.com/codelibs/fess
+
 
 # Requirements
 
@@ -11,6 +16,7 @@ For more advanced FESS usage (Elasticsearch clustering etc), visit https://githu
   * For more information, refer to https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html
 
 * For Elasticsearch containers, it's optimal to use ENVIRONMENT `bootstrap.memory_lock=true` for better ram usage, but this requires a change to /etc/security/limits.conf. See https://stackoverflow.com/questions/45008355/elasticsearch-process-memory-locking-failed
+
 
 # Usage
 

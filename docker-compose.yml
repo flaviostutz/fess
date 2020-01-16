@@ -11,34 +11,30 @@ services:
       - "ES_HTTP_URL=http://es01:9200"
 
   es01:
-    image: flaviostutz/fess-elasticsearch:7.5.1.3
+    image: flaviostutz/fess-elasticsearch:7.5.1.4
     environment:
       - node.name=es01
-      # - discovery.seed_hosts=es02
+      - discovery.seed_hosts=es02
       - cluster.initial_master_nodes=es01
       - cluster.name=fess-es
       - bootstrap.memory_lock=false
-    # volumes:
-    #   - esdata01:/usr/share/elasticsearch/data
-    #   - esdictionary01:/usr/share/elasticsearch/config/dictionary
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
 
-  # es02:
-  #   image: codelibs/fess-elasticsearch:7.5.1
-  #   environment:
-  #     - node.name=es02
-  #     - discovery.seed_hosts=es01
-  #     - cluster.initial_master_nodes=es01,es02
-  #     - cluster.name=fess-es
-  #     - bootstrap.memory_lock=false
-  #     - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
-  #     - "FESS_DICTIONARY_PATH=/usr/share/elasticsearch/config/dictionary"
-  #   volumes:
-  #     - esdata02:/usr/share/elasticsearch/data
-  #     - esdictionary02:/usr/share/elasticsearch/config/dictionary
-  #   ports:
-  #     - 9201:9200
+  es02:
+    image: flaviostutz/fess-elasticsearch:7.5.1.4
+    environment:
+      - node.name=es02
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01,es02
+      - cluster.name=fess-es
+      - bootstrap.memory_lock=false
+    volumes:
+      - esdata02:/usr/share/elasticsearch/data
+    ports:
+      - 9201:9200
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.5.1
@@ -47,13 +43,9 @@ services:
     ports:
       - 5601:5601
 
-# volumes:
-#   esdata01:
-#     driver: local
-#   esdictionary01:
-#     driver: local
-#   esdata02:
-#     driver: local
-#   esdictionary02:
-#     driver: local
+volumes:
+  esdata01:
+    driver: local
+  esdata02:
+    driver: local
 
