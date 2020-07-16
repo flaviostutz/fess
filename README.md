@@ -1,4 +1,7 @@
 # FESS docker-compose
+
+[<img src="https://img.shields.io/docker/automated/flaviostutz/fess"/>](https://hub.docker.com/r/flaviostutz/fess)
+
 FESS Docker Container with advanced clustering configurations.
 
 FESS is an advanced search engine. Demo at https://search.n2sm.co.jp
